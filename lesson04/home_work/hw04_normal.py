@@ -21,9 +21,27 @@ line = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgAYEOmHBSQsSUHKvSfbmxULaysmNO'\
        'zTYwZAiRwycdlHfyHNGmkNqSwXUrxGc'
 
 import re
+
+# re way
 pattern = r'[A-Z]*([a-z]+)[A-Z]*'
 
 print(re.findall(pattern, line))
+
+# without re way
+chars = ""
+result = []
+
+for char in line:
+       if char.islower():
+              chars = chars + char
+       elif chars:
+              result.append(chars)
+              chars = ""
+if chars:
+       result.append(chars)
+       chars = ""
+
+print (result)
 
 
 
@@ -35,7 +53,7 @@ print(re.findall(pattern, line))
 # нужно получить список строк: ['AY', 'NOGI', 'P']
 # Решить задачу двумя способами: с помощью re и без.
 
-line_2 = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgAYEOmHBSQsSUHKvSfbmxULaysm'\
+line_2 = 'kgAYEOmHBSQsSUHKvSfbmxULaysm'\
        'NOGIPHpEMujalpPLNzRWXfwHQqwksrFeipEUlTLeclMwAoktKlfUBJHPsnawvjPhfgewV'\
        'fzKTUfSYtBydXaVIpxWjNKgXANvIoumesCSSvjEGRJosUfuhRRDUuTQwLlJJJDdkVjfSA'\
        'HqnLxooisBDWuxIhyjJaXDYwdoVPnsllMngNlmkpYOlqXEFIxPqqqgAWdJsOvqppOfyIV'\
@@ -51,9 +69,38 @@ line_2 = 'mtMmEZUOmcqWiryMQhhTxqKdSTKCYEJlEZCsGAMkgAYEOmHBSQsSUHKvSfbmxULaysm'\
        'JFaXiUWgsKQrDOeZoNlZNRvHnLgCmysUeKnVJXPFIzvdDyleXylnKBfLCjLHntltignbQ'\
        'oiQzTYwZAiRwycdlHfyHNGmkNqSwXUrxGC'
 
+# re way
 pattern_2 = r'[a-z]{2}([A-Z]+)[A-Z]{2}'
 
 print(re.findall(pattern_2, line_2))
+
+# without re way !!!чуть-чуть неправильно работае
+upchars = ""
+chars = ""
+result = []
+
+for char in line_2:
+
+       if char.islower():
+              chars = chars + char
+
+              if len(upchars) > 2:
+                     result.append(upchars[0:-2])
+                     upchars = ""
+                     chars = ""
+              else:
+                     upchars = ""
+
+
+       elif (len(chars) >= 2 and char.isupper()):
+              upchars = upchars + char
+
+       elif char.isupper():
+              chars = ""
+print (result)
+
+
+
 
 # Задание-3:
 # Напишите скрипт, заполняющий указанный файл (самостоятельно задайте имя файла)
