@@ -1,30 +1,3 @@
-# Задание-1: уравнение прямой вида y = kx + b задано в виде строки.
-# Определить координату y точки с заданной координатой x.
-
-equation = 'y = -12x + 11111140.2121'
-x = 2.5
-# вычислите и выведите y
-
-
-# Задание-2: Дата задана в виде строки формата 'dd.mm.yyyy'.
-# Проверить, корректно ли введена дата.
-# Условия корректности:
-# 1. День должен приводиться к целому числу в диапазоне от 1 до 30(31)
-#  (в зависимости от месяца, февраль не учитываем)
-# 2. Месяц должен приводиться к целому числу в диапазоне от 1 до 12
-# 3. Год должен приводиться к целому положительному числу в диапазоне от 1 до 9999
-# 4. Длина исходной строки для частей должна быть в соответствии с форматом 
-#  (т.е. 2 символа для дня, 2 - для месяца, 4 - для года)
-
-# Пример корректной даты
-date = '01.11.1985'
-
-# Примеры некорректных дат
-date = '01.22.1001'
-date = '1.12.1001'
-date = '-2.10.3001'
-
-
 # Задание-3: "Перевёрнутая башня" (Задача олимпиадного уровня)
 #
 # Вавилонцы решили построить удивительную башню —
@@ -33,6 +6,11 @@ date = '-2.10.3001'
 # затем идет два этажа, на каждом из которых по две комнаты, 
 # затем идёт три этажа, на каждом из которых по три комнаты и так далее:
 #         ...
+#
+#   27  28  29  30
+#   23  24  25  26
+#   19  20  21  22
+#   15  16  17  18
 #     12  13  14
 #     9   10  11
 #     6   7   8
@@ -54,3 +32,33 @@ date = '-2.10.3001'
 #
 # Вход: 11
 # Выход: 5 3
+
+from math import sqrt
+
+def tower_elevator(seecing_room):
+    start_room = 0
+    floors = 0
+
+    for floore_group in range(1,2000000):
+        rooms_count = start_room + floore_group ** 2
+        if seecing_room in range(start_room, rooms_count + 1):
+
+            if int((seecing_room - start_room) % sqrt(rooms_count - start_room)):
+                current_group_flor = int((seecing_room - start_room) // sqrt(rooms_count - start_room)) + 1
+            else:
+                current_group_flor = int((seecing_room - start_room) // sqrt(rooms_count - start_room))
+
+            if int((seecing_room - start_room) % sqrt(rooms_count - start_room)):
+                room = int((seecing_room - start_room) % sqrt(rooms_count - start_room))
+            else:
+                room = int(sqrt(rooms_count - start_room))
+
+            print(current_group_flor + floors , room)
+
+            break
+
+        start_room = start_room + floore_group ** 2
+        floors += floore_group
+
+
+tower_elevator(25)
