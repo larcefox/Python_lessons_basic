@@ -10,6 +10,43 @@
 # и выводит результат действия: "Успешно создано/удалено/перешел",
 # "Невозможно создать/удалить/перейти"
 
+import os
+from hw05_easy import *
+
+def menu():
+
+    menu_opt = {
+        "1": {'name': 'Перейти в папку', 'func': change_dir, 'param': True},
+        "2": {'name': 'Просмотреть содержимое текущей папки', 'func': show_dir, 'param': False},
+        "3": {'name': 'Удалить папку', 'func': remove_dir, 'param': True},
+        "4": {'name': 'Создать папку', 'func': create_dir, 'param': True},
+        "5": {'name': 'Выход', 'func': quit, 'param': 0},
+    }
+
+    while True:
+
+        for key, val in menu_opt.items():
+            print(f'{key}. {val["name"]}')
+
+        temp = input("Выберите пункт меню\n")
+
+        for key, val in menu_opt.items():
+            if key == temp:
+                if val['param']:
+                    val['func'](input("Укажите название папки\n"))
+                    break
+                else:
+                    val['func']()
+                    break
+            else:
+                continue
+
+if __name__ == "__main__":
+
+    while True:
+
+        menu()
+
 # Для решения данной задачи используйте алгоритмы из задания easy,
 # оформленные в виде соответствующих функций,
 # и импортированные в данный файл из easy.py
