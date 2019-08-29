@@ -12,6 +12,7 @@
 import os
 import sys
 import shutil
+
 print('sys.argv = ', sys.argv)
 
 
@@ -23,6 +24,7 @@ def print_help():
     print("cp <file_name> - создает копию указанного файла")
     print("rm <file_name> - удаляет указанный файл (запросить подтверждение операции)")
     print("cd <full_path or relative_path> - меняет текущую директорию на указанную")
+    print("pwd - отображение полного пути текущей директории")
 
 
 def make_dir():
@@ -47,7 +49,7 @@ def file_copy():
         return
     file_path = os.path.join(os.getcwd(), fs_object_name)
     try:
-        shutil.copy2(file_path)
+        shutil.copy2(file_path, f'{file_path}_copy')
         print('файл {} создан'.format(fs_object_name))
     except FileExistsError:
         print('файл {} уже существует'.format(fs_object_name))
@@ -57,7 +59,7 @@ def file_drop():
     if not fs_object_name:
         print("Необходимо указать имя файла вторым параметром")
         return
-    if input(f'Удалить файл {fs_object_name}? y/n').lower() == 'y':
+    if input(f'Удалить файл {fs_object_name}? y/n \n').lower() == 'y':
         file_path = os.path.join(os.getcwd(), fs_object_name)
 
         if os.path.exists(file_path):
@@ -67,6 +69,8 @@ def file_drop():
             print('файл {} не существует'.format(fs_object_name))
     else:
         return
+
+
 def change_dir():
 
     if not fs_object_name:
@@ -80,6 +84,10 @@ def change_dir():
     else:
         print('директория {} не существует'.format(fs_object_name))
 
+
+def list_fs_object():
+    print(os.listdir(os.getcwd()))
+
 def abs_path():
     print(os.path.abspath('.'))
 
@@ -90,7 +98,8 @@ do = {
     "cp": file_copy,
     "rm": file_drop,
     "cd": change_dir,
-    "ls": abs_path,
+    "pwd": abs_path,
+    "ls": list_fs_object,
 
 }
 
