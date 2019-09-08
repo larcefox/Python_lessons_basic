@@ -57,3 +57,141 @@
 модуль random: http://docs.python.org/3/library/random.html
 
 """
+__author__ = 'Субботин Андрей Владимирович'
+
+import random
+
+
+class LotoCard(object):
+
+    def __init__(self):
+
+        self.numbers = set()
+        self.card_numbers = []
+        self.__shufl()
+
+    def __shufl(self):
+
+        while len(self.numbers) < 15:
+
+            self.numbers.add(random.randint(1,91))
+
+        self.card_numbers = list(self.numbers)
+        self.card_numbers.extend(('__',) * 12)
+        random.shuffle(self.card_numbers)
+
+
+
+class Player(object):
+
+    def __init__(self, name = None):
+        
+        self.is_human = bool()
+        self.name = name
+        if self.name == None:
+            self.name = "Компьютер"
+            self.is_human = False
+
+        else:
+            self.is_human = True
+
+    def ask(self):
+
+        while True:
+            ask = input('Зачеркнуть? y/n \n')
+
+            if ask.lower() == 'y':
+                return True
+            elif ask.lower() == 'n':
+                return False
+            else:
+                print('вы не ответили')
+                continue
+
+
+class Bag(object):
+
+    def __init__(self):
+
+        self.numbers = list(range(1, 91))
+        random.shuffle(self.numbers)
+
+    def push_barel(self):
+
+        return self.numbers.pop()
+
+
+class Lobby(object):
+    def __init__(self):
+        self.__bag = Bag()
+        self.card1 = LotoCard()
+        self.card2 = LotoCard()
+        self.pleer1 = Player(input('Введите ваше имя:\n'))
+        self.pleer2 = Player()
+
+    def show_cards(self):
+
+        print('{:-^26}'.format(f"Карточка {self.pleer1.name}"))
+        print(*self.card1.card_numbers[:9])
+        print(*self.card1.card_numbers[9:18])
+        print(*self.card1.card_numbers[18:])
+        print('--------------------------\n')
+        print('{:-^26}'.format(f"Карточка {self.pleer2.name}"))
+        print(*self.card2.card_numbers[:9])
+        print(*self.card2.card_numbers[9:18])
+        print(*self.card2.card_numbers[18:])
+        print('--------------------------')
+
+    def show_barel(self):
+        return self.__bag.push_barel()
+    @property
+    def barel_remained(self):
+        return len(self.__bag.numbers)
+
+    @staticmethod
+    def pleer_check(is_human, barel, numbers, card_numbers):
+
+        if is_human == True:
+
+            if barel in numbers:
+                right_answer = True
+            else:
+                right_answer = False
+
+            pleer_answer = lobby.pleer1.ask()
+
+            if pleer_answer != right_answer:
+                print('Вы проиграли.')
+                exit(0)
+            else:
+                if right_answer == True:
+
+                    card_numbers[card_numbers.index(barel)] = '--'
+                    numbers.pop()
+
+                else:
+                    pass
+        else:
+            if barel in numbers:
+                card_numbers[card_numbers.index(barel)] = '--'
+                numbers.pop()
+
+if __name__ == '__main__':
+    lobby = Lobby()
+
+    while lobby.card1.numbers and lobby.card2.numbers:
+
+        barel = lobby.show_barel()
+
+        print(f'Новый бочонок: {barel} (осталось {lobby.barel_remained})')
+        lobby.show_cards()
+
+        lobby.pleer_check(lobby.pleer1.is_human, barel, lobby.card1.numbers, lobby.card1.card_numbers)
+        lobby.pleer_check(lobby.pleer2.is_human, barel, lobby.card2.numbers, lobby.card2.card_numbers)
+
+    if not lobby.card1.numbers and lobby.pleer1.is_human:
+        print('Вы выиграли')
+    elif not lobby.card2.numbers and lobby.pleer2.is_human:
+        print('Вы выиграли')
+    else:
+        print('Вы выиграли')
