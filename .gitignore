@@ -23,7 +23,7 @@ parts/
 sdist/
 var/
 *.egg-info/
-.installed.cfg
+.installed.cfgw
 *.egg
 
 # PyInstaller
@@ -71,6 +71,7 @@ target/
 # .idea/workspace.xml
 # .idea/tasks.xml
 # .idea/dictionaries
+*.id
 
 # Sensitive or high-churn files:
 # .idea/dataSources.ids
@@ -107,3 +108,6 @@ crashlytics.properties
 crashlytics-build.properties
 
 /*.zip
+/lesson08/home_work/city.list.json.gz
+/lesson08/home_work/SQLite.db
+/lesson08/home_work/app.id
